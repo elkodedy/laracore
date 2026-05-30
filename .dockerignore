@@ -1,0 +1,88 @@
+# Exclude these files from Docker build context
+# This speeds up docker build by not copying unnecessary files
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies (will be installed in container)
+node_modules
+vendor
+.bundle
+
+# IDE & editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*.local
+.env.*.php
+.env.dusk.local
+.env.testing
+
+# Logs
+*.log
+logs/
+storage/logs/*
+
+# Build artifacts
+dist/
+build/
+.next/
+out/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Development
+.vagrant
+docker-compose.override.yml
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+
+# Package manager lock files (only in development)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Cache
+.cache/
+*.cache
+
+# Laravel specific
+bootstrap/cache/*
+storage/framework/cache/
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# Testing
+.phpunit.result.cache
+.php_cs.cache
+
+# Node
+npm-debug.log
+yarn-error.log
+
+# Database
+*.sqlite
+*.db
+database/
