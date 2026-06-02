@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
-import Layout from '@layouts/Layout';
+import RootLayout from './layouts/RootLayout';
 
 // Import CSS
 import '../css/app.css';
@@ -18,7 +18,11 @@ createInertiaApp({
     return pages[`./pages/${name}.tsx`];
   },
   setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />);
+    createRoot(el).render(
+      <RootLayout>
+        <App {...props} />
+      </RootLayout>
+    );
   },
   progress: {
     color: '#4f46e5',

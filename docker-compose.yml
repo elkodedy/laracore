@@ -12,8 +12,6 @@ services:
     depends_on:
       php:
         condition: service_healthy
-      node:
-        condition: service_started
     networks:
       - laracore-network
     healthcheck:
@@ -79,14 +77,20 @@ services:
       - "5173:5173"
     volumes:
       - ./src:/var/www/html:delegated
-      # - /var/www/html/node_modules  # Prevent node_modules sync issues
-      - node_modules_data:/var/www/html/node_modules   # ← named, tidak ikut terhapus
+      - /var/www/html/node_modules
     environment:
       - NODE_ENV=development
+      - VITE_HMR_HOST=localhost
+      - VITE_HMR_PORT=5173
     networks:
       - laracore-network
-    command: sleep infinity
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5173/@vite/client"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
 
   # PostgreSQL database
   postgres:
@@ -155,6 +159,4 @@ volumes:
   postgres_data:
     driver: local
   redis_data:
-    driver: local
-  node_modules_data:
     driver: local
