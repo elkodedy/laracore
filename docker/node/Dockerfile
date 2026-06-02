@@ -10,23 +10,15 @@ RUN apk add --no-cache \
     g++ \
     bash
 
-# Copy package files from src/
+# Copy only package files
 COPY src/package.json src/package-lock.json* src/pnpm-lock.yaml* src/yarn.lock* ./
 
-# Install dependencies (support npm, yarn, pnpm)
-RUN if [ -f pnpm-lock.yaml ]; then \
-        npm install -g pnpm && pnpm install; \
-    elif [ -f yarn.lock ]; then \
-        npm install -g yarn && yarn install; \
-    else \
-        npm install; \
-    fi
-
-# Copy application files from src/
-COPY src/ .
+# Install dependencies
+RUN npm install --legacy-peer-deps && \
+    chmod -R +x node_modules/.bin/
 
 # Expose Vite dev server port
 EXPOSE 5173
 
-# Run Vite dev server with HMR support for Docker
+# Run Vite dev server
 CMD ["npm", "run", "dev"]
